@@ -407,9 +407,11 @@ static int select_ramdisk(struct bootm_headers *images, const char *select, u8 a
 			int ret;
 			if (IS_ENABLED(CONFIG_CMD_ABOOTIMG)) {
 				void *boot_img = map_sysmem(get_abootimg_addr(), 0);
+				void *init_boot_img = map_sysmem(get_ainit_bootimg_addr(), 0);
 				void *vendor_boot_img = map_sysmem(get_avendor_bootimg_addr(), 0);
+				void *ramdisk_img = (init_boot_img == -1) ? boot_img : init_boot_img;
 
-				ret = android_image_get_ramdisk(boot_img, vendor_boot_img,
+				ret = android_image_get_ramdisk(ramdisk_img, vendor_boot_img,
 								rd_datap, rd_lenp);
 				unmap_sysmem(vendor_boot_img);
 				unmap_sysmem(boot_img);
