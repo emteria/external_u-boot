@@ -388,7 +388,7 @@ static int abortboot_single_key(int bootdelay)
 
 	while ((bootdelay > 0) && (!abort)) {
 		--bootdelay;
-		/* delay 1000 ms */
+		/* delay 100 ms */
 		ts = get_timer(0);
 		do {
 			if (tstc()) {	/* we got a key press	*/
@@ -402,7 +402,7 @@ static int abortboot_single_key(int bootdelay)
 				break;
 			}
 			udelay(10000);
-		} while (!abort && get_timer(ts) < 1000);
+		} while (!abort && get_timer(ts) < 100);
 
 		printf("\b\b\b%2d ", bootdelay);
 	}
